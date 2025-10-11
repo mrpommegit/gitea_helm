@@ -1,51 +1,52 @@
-server:
-  ha:
+vault:
+  server:
+    ha:
+      enabled: false
+    dataStorage:
+      enabled: true
+      size: 20Gi
+    standalone:
+      enabled: true
+      config: |
+        listener "tcp" {
+          address         = "0.0.0.0:8200"
+          cluster_address = "0.0.0.0:8201"
+          tls_disable     = 1
+        }
+
+        storage "file" {
+          path = "/vault/data"
+        }
+
+        ui = true
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations: {}
+      hosts:
+        - host: vault.pi2security.com
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: vault-pi2security-com-tls
+          hosts:
+            - vault.pi2security.com
+    service:
+      type: ClusterIP
+    readinessProbe:
+      enabled: true
+    livenessProbe:
+      enabled: true
+
+  ui:
+    enabled: true
+    serviceType: ClusterIP
+    ingress:
+      enabled: false
+
+  injector:
     enabled: false
-  dataStorage:
-    enabled: true
-    size: 20Gi
-  standalone:
-    enabled: true
-    config: |
-      listener "tcp" {
-        address         = "0.0.0.0:8200"
-        cluster_address = "0.0.0.0:8201"
-        tls_disable     = 1
-      }
 
-      storage "file" {
-        path = "/vault/data"
-      }
-
-      ui = true
-  ingress:
-    enabled: true
-    ingressClassName: nginx
-    annotations: {}
-    hosts:
-      - host: vault.pi2security.com
-        paths:
-          - path: /
-            pathType: Prefix
-    tls:
-      - secretName: vault-pi2security-com-tls
-        hosts:
-          - vault.pi2security.com
-  service:
-    type: ClusterIP
-  readinessProbe:
-    enabled: true
-  livenessProbe:
-    enabled: true
-
-ui:
-  enabled: true
-  serviceType: ClusterIP
-  ingress:
+  csi:
     enabled: false
-
-injector:
-  enabled: false
-
-csi:
-  enabled: false
