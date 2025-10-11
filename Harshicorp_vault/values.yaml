@@ -8,9 +8,9 @@ server:
     enabled: true
     config: |
       listener "tcp" {
-        address       = "[::]:8200"
+        address         = "[::]:8200"
         cluster_address = "[::]:8201"
-        tls_disable   = 1
+        tls_disable     = 1
       }
 
       storage "file" {
@@ -21,12 +21,12 @@ server:
   ingress:
     enabled: true
     ingressClassName: nginx
+    pathType: Prefix
     annotations: {}
     hosts:
       - host: vault.pi2security.com
         paths:
-          - path: /
-            pathType: Prefix
+          - /
     tls:
       - secretName: vault-pi2security-com-tls
         hosts:
