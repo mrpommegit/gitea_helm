@@ -19,7 +19,16 @@ server:
 
       ui = true
   ingress:
-    enabled: false
+    enabled: true
+    ingressClassName: nginx
+    annotations: {}
+    hosts:
+      - host: vault.pi2security.com
+        paths: []
+    tls:
+      - secretName: vault-pi2security-com-tls
+        hosts:
+          - vault.pi2security.com
   service:
     type: ClusterIP
   readinessProbe:
@@ -31,18 +40,7 @@ ui:
   enabled: true
   serviceType: ClusterIP
   ingress:
-    enabled: true
-    ingressClassName: nginx
-    annotations: {}
-    hosts:
-      - host: vault.pi2security.com
-        paths:
-          - path: /
-            pathType: Prefix
-    tls:
-      - secretName: vault-pi2security-com-tls
-        hosts:
-          - vault.pi2security.com
+    enabled: false
 
 injector:
   enabled: false
