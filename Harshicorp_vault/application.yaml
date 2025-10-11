@@ -9,8 +9,8 @@ spec:
     namespace: vault
     server: https://kubernetes.default.svc
   source:
-    repoURL: https://REPLACE-ME-WITH-YOUR-GIT-REPO
-    targetRevision: HEAD
+    repoURL: https://github.com/mrpommegit/gitea_helm.git
+    targetRevision: main
     path: Harshicorp_vault
     helm:
       releaseName: vault
