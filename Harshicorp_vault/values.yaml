@@ -24,7 +24,9 @@ server:
     annotations: {}
     hosts:
       - host: vault.pi2security.com
-        paths: []
+        paths:
+          - path: /
+            pathType: Prefix
     tls:
       - secretName: vault-pi2security-com-tls
         hosts:
