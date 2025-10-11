@@ -23,9 +23,11 @@ vault:
       enabled: true
       ingressClassName: nginx
       annotations: {}
-      path: /
+      pathType: Prefix
       hosts:
-        - vault.pi2security.com
+        - host: vault.pi2security.com
+          paths:
+            - /
       tls:
         - secretName: vault-pi2security-com-tls
           hosts:
