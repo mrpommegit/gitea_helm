@@ -1,15 +1,28 @@
-project: default
-source:
-  repoURL: https://github.com/mrpommegit/gitea_helm.git
-  path: Harshicorp_vault
-  targetRevision: HEAD
-destination:
-  server: https://kubernetes.default.svc
-  namespace: vault
-syncPolicy:
-  automated:
-    prune: true
-    selfHeal: true
-    enabled: true
-  syncOptions:
-    - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: vault
+  source:
+    repoURL: https://github.com/mrpommegit/gitea_helm.git
+    path: Harshicorp_vault
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      name: vault
+      namespace: vault
+      jsonPointers:
+        - /spec/volumeClaimTemplates
