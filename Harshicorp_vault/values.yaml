@@ -5,6 +5,7 @@ vault:
     dataStorage:
       enabled: true
       size: 10Gi
+      storageClass: microk8s-hostpath
     standalone:
       enabled: true
       config: |
@@ -26,8 +27,6 @@ vault:
       pathType: Prefix
       hosts:
         - host: vault.pi2security.com
-          paths:
-            - /
       tls:
         - secretName: vault-pi2security-com-tls
           hosts:
