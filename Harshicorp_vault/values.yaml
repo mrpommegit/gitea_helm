@@ -5,7 +5,6 @@ vault:
     dataStorage:
       enabled: true
       size: 20Gi
-      storageClass: microk8s-hostpath
     standalone:
       enabled: true
       config: |
