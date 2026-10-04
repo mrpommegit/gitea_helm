@@ -36,8 +36,13 @@ vault:
       type: ClusterIP
     readinessProbe:
       enabled: true
+      path: /v1/sys/health?standbyok=true
     livenessProbe:
       enabled: true
+      # A sealed/uninitialized Vault is alive and must remain available to unseal.
+      path: /v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204
+      periodSeconds: 10
+      failureThreshold: 6
 
   ui:
     enabled: true
